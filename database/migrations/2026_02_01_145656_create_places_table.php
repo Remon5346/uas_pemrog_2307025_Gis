@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('places', function (Blueprint $table) {
             $table->id();
             $table->string('name');      // Nama Lokasi
-            $table->string('latitude');  // Koordinat Lat
-            $table->string('longitude'); // Koordinat Lon
+            $table->decimal('latitude', 10, 8);  // Koordinat Lat
+            $table->decimal('longitude', 11, 8); // Koordinat Lon
             $table->text('notes')->nullable(); // Catatan User
             $table->timestamps();
         });
