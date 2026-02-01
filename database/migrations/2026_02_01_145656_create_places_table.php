@@ -9,17 +9,17 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
-{
-    Schema::create('places', function (Blueprint $table) {
-        $table->id();
-        $table->string('name');      // Nama Lokasi
-        $table->string('latitude');  // Koordinat Lat
-        $table->string('longitude'); // Koordinat Lon
-        $table->text('notes')->nullable(); // Catatan User
-        $table->timestamps();
-    });
-}
+    public function up(): void
+    {
+        Schema::create('places', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');      // Nama Lokasi
+            $table->string('latitude');  // Koordinat Lat
+            $table->string('longitude'); // Koordinat Lon
+            $table->text('notes')->nullable(); // Catatan User
+            $table->timestamps();
+        });
+    }
 
     /**
      * Reverse the migrations.
