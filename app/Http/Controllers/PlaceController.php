@@ -2,51 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Place;
 use Illuminate\Http\Request;
-use App\Models\Place; 
+use Illuminate\Support\Facades\Auth; // PENTING: Untuk fitur Login
 
 class PlaceController extends Controller
 {
-    // 1. READ: Tampilkan halaman utama & data
+    // 1. KUNCI HALAMAN: Wajib Login untuk akses controller ini
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $places = Place::orderBy('created_at', 'desc')->get();
+        // 2. ISOLASI DATA (READ): Hanya tampilkan data milik User yang sedang Login
+        $places = Place::where('user_id', Auth::id())->get();
         return view('home', compact('places'));
     }
 
-    // 2. CREATE: Simpan lokasi baru
     public function store(Request $request)
     {
-        // Validasi data tidak boleh kosong
         $request->validate([
             'name' => 'required',
-            'lat' => 'required',
-            'lon' => 'required'
+            'latitude' => 'required',
+            'longitude' => 'required'
         ]);
 
-        Place::create([
-            'name' => $request->name,
-            'latitude' => $request->lat,
-            'longitude' => $request->lon,
-            'notes' => 'Lokasi tersimpan dari Peta', 
-        ]);
+        $place = new Place();
+        $place->name = $request->name;
+        $place->latitude = $request->latitude;
+        $place->longitude = $request->longitude;
+        $place->notes = $request->notes;
+        
+        // 3. ISOLASI DATA (CREATE): Catat ID User yang sedang Login
+        $place->user_id = Auth::id(); 
+        
+        $place->save();
 
         return redirect()->back()->with('success', 'Lokasi berhasil disimpan!');
     }
 
-    // 3. UPDATE: Edit catatan
-    public function update(Request $request, $id)
-    {
-        $place = Place::find($id);
-        $place->update(['notes' => $request->notes]);
-        return redirect()->back()->with('success', 'Catatan berhasil diupdate!');
-    }
-
-    // 4. DELETE: Hapus data
     public function destroy($id)
     {
-        $place = Place::find($id);
-        $place->delete();
-        return redirect()->back()->with('success', 'Lokasi dihapus!');
+        // 4. KEAMANAN (DELETE): Pastikan yang dihapus adalah miliknya sendiri
+        $place = Place::where('id', $id)->where('user_id', Auth::id())->first();
+
+        if ($place) {
+            $place->delete();
+            return redirect()->back()->with('success', 'Lokasi berhasil dihapus!');
+        } else {
+            return redirect()->back()->with('error', 'Akses ditolak!');
+        }
     }
 }

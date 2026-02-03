@@ -14,3 +14,6 @@ Route::put('/update-place/{id}', [PlaceController::class, 'update'])->name('plac
 
 // Hapus Data (Delete)
 Route::delete('/delete-place/{id}', [PlaceController::class, 'destroy'])->name('place.destroy');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
