@@ -16,4 +16,5 @@ Route::put('/update-place/{id}', [PlaceController::class, 'update'])->name('plac
 Route::delete('/delete-place/{id}', [PlaceController::class, 'destroy'])->name('place.destroy');
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Arahkan dashboard /home ke PlaceController agar data peta muncul
+Route::get('/home', [App\Http\Controllers\PlaceController::class, 'index'])->name('home');
