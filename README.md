@@ -1,3 +1,4 @@
+CSS, JavaScript
 # UAS GIS - Ardi Nur Harom (2307025)
 
 Aplikasi Sistem Informasi Geografis (GIS) berbasis Laravel
@@ -8,8 +9,7 @@ untuk menyimpan dan menampilkan data lokasi pada peta.
 - PHP 8
 - MySQL
 - Leaflet JS
-- HTML, CSS, JavaScript
-
+- HTML, 
 ## Fitur Aplikasi
 - Menambahkan lokasi baru
 - Menampilkan lokasi di peta
@@ -49,3 +49,4 @@ http://127.0.0.1:8000
 ![Halaman Utama](screenshots/home.png)
 ![Tambah Lokasi](screenshots/add.png)
 ![Edit Lokasi](screenshots/edit.png)
+
