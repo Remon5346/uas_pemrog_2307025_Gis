@@ -57,7 +57,7 @@ class PlaceController extends Controller
         }
     }
 
-    // MENGHAPUS DATA (DELETE)
+    
     public function destroy($id)
     {
         $place = Place::where('id', $id)->where('user_id', Auth::id())->first();
